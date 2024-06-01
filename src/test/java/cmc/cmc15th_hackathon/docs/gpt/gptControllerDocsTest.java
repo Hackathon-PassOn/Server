@@ -1,5 +1,6 @@
 package cmc.cmc15th_hackathon.docs.gpt;
 
+import static cmc.cmc15th_hackathon.domain.gpt.request.GptRequest.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -11,6 +12,7 @@ import cmc.cmc15th_hackathon.docs.RestDocsSupport;
 import cmc.cmc15th_hackathon.domain.gpt.controller.GptController;
 import cmc.cmc15th_hackathon.domain.gpt.request.GptRequest;
 import cmc.cmc15th_hackathon.domain.gpt.request.GptRequest.RandomPayerRequest;
+import cmc.cmc15th_hackathon.domain.gpt.response.GptResponse;
 import cmc.cmc15th_hackathon.domain.gpt.response.GptResponse.GptPayerResponse;
 import cmc.cmc15th_hackathon.domain.gpt.service.GptService;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -57,7 +59,7 @@ public class gptControllerDocsTest extends RestDocsSupport {
         RestDocumentationResultHandler document = documentHandler(
                 "get-random-payer-api", prettyPrint(), prettyPrint(), parameters);
 
-        BDDMockito.given(gptService.getRandomPayer(any(GptRequest.RandomPayerRequest.class)))
+        BDDMockito.given(gptService.getRandomPayer(any(RandomPayerRequest.class)))
                 .willReturn(GptPayerResponse.response("덕배가 계산합니다. 오늘 지갑이 가벼워질 운세입니다."));
         //when //then
         mockMvc.perform(
@@ -65,6 +67,49 @@ public class gptControllerDocsTest extends RestDocsSupport {
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document);
+    }
+
+    @DisplayName("랜덤 메뉴 뽑기 API")
+    @Test
+    void gptRandomMenu() throws Exception {
+        //given
+        BDDMockito.given(gptService.getRandomMenu(any(RandomMenuRequest.class)))
+                .willReturn(GptResponse.GptMenuResponse.builder()
+                        .title("오늘의 메뉴는 마라탕!")
+                        .content("마라탕이 선정된 이유는 그냥 맛있어서 입니다...")
+                        .build());
+
+        RandomMenuRequest request = new RandomMenuRequest(List.of("마라탕","짜장면","돼지갈비","파스타"));
+
+        ResourceSnippetParameters parameters = ResourceSnippetParameters.builder()
+                .tag("GPT 호출 API")
+                .summary("랜덤 메뉴 뽑기")
+                .requestFields(
+                        fieldWithPath("menuNameList").type(JsonFieldType.ARRAY)
+                                .description("메뉴 이름 리스트")
+                )
+                .responseFields(
+                        fieldWithPath("code").type(JsonFieldType.NUMBER)
+                                .description("상태코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING)
+                                .description("응답 메시지"),
+                        fieldWithPath("data.title").type(JsonFieldType.STRING)
+                                .description("제목"),
+                        fieldWithPath("data.content").type(JsonFieldType.STRING)
+                                .description("내용"))
+                .build();
+        RestDocumentationResultHandler document = documentHandler(
+                "get-random-payer-api", prettyPrint(), prettyPrint(), parameters);
+
+        //when //then
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/gpt/random-menu")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document);
