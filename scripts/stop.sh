@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 
-# 필요한 디렉토리와 파일 권한 설정
-sudo chmod -R 755 /home/ec2-user/app/deploy
-sudo touch /home/ec2-user/app/deploy/deploy.log
-sudo chmod 644 /home/ec2-user/app/deploy/deploy.log
+# 로그 파일의 디렉토리가 존재하는지 확인하고 없으면 생성
+if [ ! -d "/home/ec2-user/app/deploy" ]; then
+  sudo mkdir -p /home/ec2-user/app/deploy
+  sudo chmod 755 /home/ec2-user/app/deploy
+fi
 
+# 로그 파일을 생성하고 권한 설정
+sudo touch /home/ec2-user/app/deploy/deploy.log
+sudo chmod 666 /home/ec2-user/app/deploy/deploy.log
+
+# 로그 파일에 로그 작성
+echo "Stopping application" >> /home/ec2-user/app/deploy/deploy.log
 PROJECT_ROOT="/home/ec2-user/app/deploy"
 JAR_FILE="$PROJECT_ROOT/build/libs/cmc15th_hackathon-0.0.1-SNAPSHOT.jar"
 
