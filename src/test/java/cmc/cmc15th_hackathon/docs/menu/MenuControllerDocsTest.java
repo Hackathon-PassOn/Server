@@ -34,7 +34,7 @@ public class MenuControllerDocsTest extends RestDocsSupport {
         return new MenuController(menuService);
     }
 
-    @DisplayName("모임 장소 추천 조회 리스트 API")
+    @DisplayName("위치기반 메뉴 추천 조회 API")
     @Test
     void keywordCentralizedMeetingSpot() throws Exception {
         // given
@@ -150,7 +150,7 @@ public class MenuControllerDocsTest extends RestDocsSupport {
                         parameterWithName("x").description("ex) 37.6823811"),
                         parameterWithName("y").description("ex) 127.232943"),
                         parameterWithName("local").description("역(또는 지역)이름"),
-                        parameterWithName("keyword").description("카페 / 스터디카페 / 식당 / 도서관 / 스터디룸"))
+                        parameterWithName("keyword").description("한식 / 일식 / 양식 / 중식"))
                 .responseFields(
                         fieldWithPath("code").type(NUMBER)
                                 .description("상태 코드"),
