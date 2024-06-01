@@ -11,6 +11,7 @@ import cmc.cmc15th_hackathon.docs.RestDocsSupport;
 import cmc.cmc15th_hackathon.domain.gpt.controller.GptController;
 import cmc.cmc15th_hackathon.domain.gpt.request.GptRequest;
 import cmc.cmc15th_hackathon.domain.gpt.request.GptRequest.RandomPayerRequest;
+import cmc.cmc15th_hackathon.domain.gpt.response.GptResponse.GptPayerResponse;
 import cmc.cmc15th_hackathon.domain.gpt.service.GptService;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import java.util.List;
@@ -49,7 +50,7 @@ public class gptControllerDocsTest extends RestDocsSupport {
                                         .description("상태코드"),
                                 fieldWithPath("message").type(JsonFieldType.STRING)
                                         .description("응답 메시지"),
-                                fieldWithPath("data").type(JsonFieldType.STRING)
+                                fieldWithPath("data.content").type(JsonFieldType.STRING)
                                         .description("출력값")
                         )
                         .build();
@@ -57,7 +58,7 @@ public class gptControllerDocsTest extends RestDocsSupport {
                 "get-random-payer-api", prettyPrint(), prettyPrint(), parameters);
 
         BDDMockito.given(gptService.getRandomPayer(any(GptRequest.RandomPayerRequest.class)))
-                .willReturn("덕배가 계산합니다. 오늘 지갑이 가벼워질 운세입니다.");
+                .willReturn(GptPayerResponse.response("덕배가 계산합니다. 오늘 지갑이 가벼워질 운세입니다."));
         //when //then
         mockMvc.perform(
                 RestDocumentationRequestBuilders.post("/gpt/random-payer")

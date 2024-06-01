@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,23 @@ public class GptResponse {
             private int index;
             private Messages message;
         }
+
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class GptPayerResponse{
+        private String content;
+
+        public static GptPayerResponse response(String content){
+            return GptPayerResponse.builder()
+                    .content(content)
+                    .build();
+        }
+
+
 
     }
 
