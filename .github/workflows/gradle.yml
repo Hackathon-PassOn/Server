@@ -1,0 +1,60 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    # 1 : github SECRET에서 yml 파일 불러오기
+    - run: touch ./src/main/resources/application.yml
+    - run: echo "${{secrets.APPLICATION }}" > ./src/main/resources/application.yml
+    - run: cat ./src/main/resources/application.yml
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Make zip file
+      run: zip -r ./EATcha.zip .
+      shell: bash
+      
+    # 2 : AWS 계정 설정
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with: 
+        aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key : ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        aws-region: ${{secrets.AWS_REGION}}
+
+      
+    # 3 : 만들어 놓은 S3에 해당 zip 파일 저장 
+    - name: Upload to S3
+      run: aws s3 cp --region ${{secrets.AWS_REGION}} ./EATcha.zip s3://cmc15th-hac-bucket/EATcha.zip
+
+
+    # 4 : AWS CodeDeploy에 배포
+    - name: Deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+      run: |
+        aws deploy create-deployment \
+        --application-name Hackathon_Server \
+        --deployment-group-name EATcha-deploy \
+        --file-exists-behavior OVERWRITE \
+        --s3-location bucket=cmc15th-hac-bucket,bundleType=zip,key=EATcha.zip \
+        --region ${{ secrets.AWS_REGION }}
