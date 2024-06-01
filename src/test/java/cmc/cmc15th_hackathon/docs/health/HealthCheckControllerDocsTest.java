@@ -6,7 +6,6 @@ import cmc.cmc15th_hackathon.domain.health.service.HealthCheckService;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 
