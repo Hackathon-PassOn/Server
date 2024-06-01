@@ -51,9 +51,21 @@ public class GptResponse {
                     .content(content)
                     .build();
         }
-
-
-
     }
 
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class GptMenuResponse{
+        private String title;
+        private String content;
+
+        public static GptMenuResponse response(String title,String content){
+            return GptMenuResponse.builder()
+                    .title(title)
+                    .content(content)
+                    .build();
+        }
+    }
 }
