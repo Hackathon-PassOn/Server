@@ -35,7 +35,7 @@ public class gptControllerDocsTest extends RestDocsSupport {
     @DisplayName("랜덤 사용자 뽑기 API")
     @Test
     void gptRandomPayer() throws Exception {
-        RandomPayerRequest request = new RandomPayerRequest(List.of("미리", "덕배", "헤일리"));
+        RandomPayerRequest request = new RandomPayerRequest(List.of("미리", "로빈", "헤일리"));
 
         //given
         ResourceSnippetParameters parameters = ResourceSnippetParameters.builder()
