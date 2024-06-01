@@ -24,7 +24,7 @@ public class HealthCheckController {
 
     @PostMapping("/check/parameter")
     private CustomResponseEntity<HealthCheckResponse.Parameter> healthCheckForParameter(
-            @Valid @RequestBody HealthCheckRequest.Parameter request
+        @Valid @RequestBody HealthCheckRequest.Parameter request
     ) {
         return CustomResponseEntity.success(healthCheckService.parameterCheck(request));
     }
