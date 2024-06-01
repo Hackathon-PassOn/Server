@@ -44,10 +44,12 @@ public class GptResponse {
     @AllArgsConstructor
     @Builder
     public static class GptPayerResponse{
+        private String title;
         private String content;
 
-        public static GptPayerResponse response(String content){
+        public static GptPayerResponse response(String title,String content){
             return GptPayerResponse.builder()
+                    .title(title)
                     .content(content)
                     .build();
         }

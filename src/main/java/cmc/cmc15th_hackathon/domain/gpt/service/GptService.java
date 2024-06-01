@@ -19,20 +19,21 @@ public class GptService {
     @Value("${openai.model}")
     private String model;
 
-
     @Value("${openai.api.url}")
     private String apiUrl;
 
 
     private final RestTemplate restTemplate;
 
-    public GptPayerResponse getRandomPayer(RandomPayerRequest randomPayerRequest) {
-        String peopleList = randomPayerRequest.getPeopleNameList().toString();
+    public GptResponse.GptPayerResponse getRandomPayer(RandomPayerRequest randomPayerRequest) {
+        List<String> peopleNameList = randomPayerRequest.getPeopleNameList();
+        String peopleList = peopleNameList.toString();
         String content = "오늘 나는 직장 팀원들과 밥을 먹을거야. 누가 계산할 지 너가 공정하게 골라줘야해. 조건 : 인원 중 랜덤으로 1명 선택,이름과 사유(재미있게 부정적인 하루 운세를 담아서) 30자 이내로 출력해줘. 인원 :" + peopleList;
         GPTRandomPayerCallRequest gptRandomPayerCallRequest = new GPTRandomPayerCallRequest(model, content);
         RandomPayerResponse randomPayerResponse = restTemplate.postForObject(apiUrl, gptRandomPayerCallRequest, RandomPayerResponse.class);
-        return GptPayerResponse.response(randomPayerResponse.getChoices().get(0).getMessage().getContent());
-
+        String result = randomPayerResponse.getChoices().get(0).getMessage().getContent();
+        String title = getPeopleTitle(peopleNameList, result);
+        return GptResponse.GptPayerResponse.response(title, result);
 
     }
 
@@ -44,16 +45,27 @@ public class GptService {
         RandomPayerResponse randomPayerResponse = restTemplate.postForObject(apiUrl, gptRandomMenuCallRequest, RandomPayerResponse.class);
 
         String result = randomPayerResponse.getChoices().get(0).getMessage().getContent();
-        String title = getTitle(menuNameList, result);
+        String title = getMenuTitle(menuNameList, result);
 
         return GptResponse.GptMenuResponse.response(title, result);
     }
 
-    private static String getTitle(List<String> menuNameList, String result) {
+    private static String getMenuTitle(List<String> menuNameList, String result) {
         String title = "오늘의 메뉴는 없습니다.";
         for (String menuName : menuNameList) {
             if (result.contains(menuName)) {
                 title = String.format("오늘의 메뉴는 %s!", menuName);
+                break;
+            }
+        }
+        return title;
+    }
+
+    private static String getPeopleTitle(List<String> peopleNameList, String result) {
+        String title = "";
+        for (String peopleName : peopleNameList) {
+            if (result.contains(peopleName)) {
+                title = String.format("축하합니다 %s님!", peopleName);
                 break;
             }
         }
