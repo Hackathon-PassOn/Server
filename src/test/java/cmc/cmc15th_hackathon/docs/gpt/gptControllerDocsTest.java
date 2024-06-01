@@ -26,7 +26,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 public class gptControllerDocsTest extends RestDocsSupport {
     private final GptService gptService = mock(GptService.class);
 
-
     @Override
     protected Object initController() {
         return new GptController(gptService);

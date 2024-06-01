@@ -54,7 +54,7 @@ public class GptService {
         String title = "오늘의 메뉴는 없습니다.";
         for (String menuName : menuNameList) {
             if (result.contains(menuName)) {
-                title = String.format("오늘의 메뉴는 %s!", menuName);
+                title = menuName;
                 break;
             }
         }
@@ -65,7 +65,7 @@ public class GptService {
         String title = "";
         for (String peopleName : peopleNameList) {
             if (result.contains(peopleName)) {
-                title = String.format("축하합니다 %s님!", peopleName);
+                title = peopleName+"님";
                 break;
             }
         }
