@@ -1,9 +1,8 @@
-package cmc.cmc15th_hackathon.domain.GPT.controller;
+package cmc.cmc15th_hackathon.domain.gpt.controller;
 
 
-import cmc.cmc15th_hackathon.domain.GPT.request.GPTRequest.RandomPayerRequest;
-import cmc.cmc15th_hackathon.domain.GPT.response.GPTResponse.RandomPayerResponse;
-import cmc.cmc15th_hackathon.domain.GPT.service.GPTService;
+import cmc.cmc15th_hackathon.domain.gpt.request.GptRequest.RandomPayerRequest;
+import cmc.cmc15th_hackathon.domain.gpt.service.GptService;
 import cmc.cmc15th_hackathon.global.common.CustomResponseEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/gpt")
 @RequiredArgsConstructor
-public class GPTController {
-    private final GPTService gptService;
+public class GptController {
+    private final GptService gptService;
 
     @PostMapping("/random-payer")
     public CustomResponseEntity<String> gptRandomPayer(@RequestBody RandomPayerRequest randomPayerRequest){

@@ -1,8 +1,8 @@
-package cmc.cmc15th_hackathon.domain.GPT.service;
+package cmc.cmc15th_hackathon.domain.gpt.service;
 
-import cmc.cmc15th_hackathon.domain.GPT.request.GPTRequest.GPTRandomPayerCallRequest;
-import cmc.cmc15th_hackathon.domain.GPT.request.GPTRequest.RandomPayerRequest;
-import cmc.cmc15th_hackathon.domain.GPT.response.GPTResponse.RandomPayerResponse;
+import cmc.cmc15th_hackathon.domain.gpt.request.GptRequest.GPTRandomPayerCallRequest;
+import cmc.cmc15th_hackathon.domain.gpt.request.GptRequest.RandomPayerRequest;
+import cmc.cmc15th_hackathon.domain.gpt.response.GptResponse.RandomPayerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-public class GPTService {
+public class GptService {
     @Value("${openai.model}")
     private String model;
 

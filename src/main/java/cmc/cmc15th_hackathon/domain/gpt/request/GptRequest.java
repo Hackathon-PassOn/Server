@@ -1,11 +1,12 @@
-package cmc.cmc15th_hackathon.domain.GPT.request;
+package cmc.cmc15th_hackathon.domain.gpt.request;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class GPTRequest {
+public class GptRequest {
     @Getter
     public static class Messages{
         private String role;
@@ -17,8 +18,11 @@ public class GPTRequest {
     }
     @Getter
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class RandomPayerRequest{
         private List<String> peopleNameList;
+
+
     }
 
     @Getter

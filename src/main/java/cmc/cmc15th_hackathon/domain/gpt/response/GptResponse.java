@@ -1,4 +1,4 @@
-package cmc.cmc15th_hackathon.domain.GPT.response;
+package cmc.cmc15th_hackathon.domain.gpt.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Getter
-public class GPTResponse {
+public class GptResponse {
 
     @Data
     @NoArgsConstructor
