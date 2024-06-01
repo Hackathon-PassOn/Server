@@ -2,6 +2,8 @@ package cmc.cmc15th_hackathon.domain.gpt.request;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +23,6 @@ public class GptRequest {
     @AllArgsConstructor
     public static class RandomPayerRequest{
         private List<String> peopleNameList;
-
-
     }
 
     @Getter
@@ -39,7 +39,11 @@ public class GptRequest {
     }
 
 
-
-
-
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    public static class RandomMenuRequest {
+        @NotNull(message = "메뉴 이름은 필수 값 입니다.")
+        private List<String> menuNameList;
+    }
 }
