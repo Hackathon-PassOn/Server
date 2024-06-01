@@ -46,7 +46,7 @@ public class GptService {
         String result = randomPayerResponse.getChoices().get(0).getMessage().getContent();
         String title = getTitle(menuNameList, result);
 
-        return GptResponse.GptMenuResponse.response(title, content);
+        return GptResponse.GptMenuResponse.response(title, result);
     }
 
     private static String getTitle(List<String> menuNameList, String result) {
