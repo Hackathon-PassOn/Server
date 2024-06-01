@@ -28,6 +28,10 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    # gradlew 빌드
+    - name: Build with Gradle
+      run: ./gradlew clean build
+
     - name: Make zip file
       run: zip -r ./EATcha.zip .
       shell: bash
