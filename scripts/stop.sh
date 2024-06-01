@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# 필요한 디렉토리와 파일 권한 설정
+sudo chmod -R 755 /home/ec2-user/app/deploy
+sudo touch /home/ec2-user/app/deploy/deploy.log
+sudo chmod 644 /home/ec2-user/app/deploy/deploy.log
+
 PROJECT_ROOT="/home/ec2-user/app/deploy"
 JAR_FILE="$PROJECT_ROOT/build/libs/cmc15th_hackathon-0.0.1-SNAPSHOT.jar"
 
