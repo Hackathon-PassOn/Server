@@ -102,7 +102,7 @@ public class gptControllerDocsTest extends RestDocsSupport {
                                 .description("내용"))
                 .build();
         RestDocumentationResultHandler document = documentHandler(
-                "get-random-payer-api", prettyPrint(), prettyPrint(), parameters);
+                "get-random-menu-api", prettyPrint(), prettyPrint(), parameters);
 
         //when //then
         mockMvc.perform(
