@@ -21,9 +21,9 @@ public class HealthCheckResponse {
 
         public static Parameter to(String name, Integer level) {
             return Parameter.builder()
-                    .name(name)
-                    .level(level)
-                    .build();
+                .name(name)
+                .level(level)
+                .build();
         }
     }
 }
